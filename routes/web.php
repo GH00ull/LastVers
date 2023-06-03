@@ -23,6 +23,7 @@ Route::group(
 );
 
 // ! вывод страниц 
+
 Route::get('/', [ShowController::class, 'home'])->name('home');
 Route::get('/creat', [ShowController::class, 'registration'])->name('registration');
 Route::get('/login', [ShowController::class, 'login'])->name('login');
