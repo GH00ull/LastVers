@@ -24,18 +24,17 @@ class AdsController extends Controller
         // dd($valid);
 
 
-        if ($request->hasFile('main_image')) {
-            // Имя и расширение файла
-            $filenameWithExt = $request->file('main_image')->getClientOriginalName();
-            // Только оригинальное имя файла
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Расширение
-            $extention = $request->file('main_image')->getClientOriginalExtension();
-            // Путь для сохранения
-            $fileNameToStore = "main_image/" . $filename . "_" . time() . "." . $extention;
-            // Сохраняем файл
-            $path = $request->file('main_image')->storeAs('public/', $fileNameToStore);
-            // dd($valid);
+            // Сохранение каждого файла на локальном сервере
+            foreach ($images as $image) {
+                $filename = time() . '_' . $image->getClientOriginalName();
+                $path = $image->storeAs('images', $filename);
+                $imagePaths[] = $path;
+            }
+
+            // Сохранение информации о файлах в базе данных
+            $imageData = [
+                'images' => $imagePaths
+            ];
 
             Ads::create([
                 'title' => $valid['title'],
