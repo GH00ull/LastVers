@@ -1,17 +1,21 @@
-@extends('.home') @section('title') Регистрация @endsection @section('content')
+@extends('.home') @section('title') Авторизация @endsection @section('content')
 
-<div class="w-64 mx-auto bg-white shadow-md rounded p-8">
-
-    @error('email','password')
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Ошибка!</strong>
-        <span class="block sm:inline">{{$message}}</span>
-    </div>
-    @enderror
+<div class="mt-6 w-64 mx-auto bg-white shadow-md rounded p-8">
+    
+    
     @if (session('registration_completed'))
-    <div class="alert alert-success">
-        {{ session('registration_completed') }}
-    </div>
+
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <h2 class="text-2xl font-bold mb-4">Ошибки</h2>
+      
+        <ul class="list-disc pl-6">
+          <li class="text-red-500">{{ session('registration_completed') }}</li>
+          
+          <!-- Добавьте другие ошибки здесь -->
+        </ul>
+      </div>
+   
+        
     @endif
 
     <h2 class="text-2xl font-bold mb-4">Авторизация</h2>

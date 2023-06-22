@@ -13,13 +13,19 @@ return new class extends Migration {
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
             $table->text('title');
-            $table->bigInteger('brand');
+
+
+            $table->unsignedBigInteger('id_city');
+            $table->foreign('id_city')->references('id')->on('cities')->onDelete('cascade');
+
+            $table->unsignedBigInteger('id_brand');
+            $table->foreign('id_brand')->references('id')->on('brands')->onDelete('cascade');
+
             $table->bigInteger('mileage');
             $table->bigInteger('price');
-            $table->text('photo');
             $table->text('description');
-            $table->bigInteger('city');
             $table->boolean('state');
+            $table->json('photo');
 
             $table->unsignedBigInteger('id_users');
             $table->foreign('id_users')->references('id')->on('users')->onDelete('cascade');

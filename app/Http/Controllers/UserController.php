@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Ads;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -58,22 +59,23 @@ class UserController extends Controller
             $request->session()->flash('registration_completed', 'вы успешно вошьли');
             return redirect()->route('home');
         } else {
-            $request->session()->flash('registration_completed', 'ой ошибка');
+            $request->session()->flash('registration_completed', 'Н     е правильные данные проверьте данные');
             return redirect()->route('login');
         }
     }
     public function showUser()
     {
-        // TODO ВЫВОДИТЬ СТАРНИЦУ
+
         $id = Auth::id();
-        dd(User::find($id));
+        $user = User::where('id', $id)->first();
+        $ads = Ads::where('id_users', $id)->get();
+        return view('user.user', compact('user', 'ads'));
 
     }
     public function showUserPost()
     {
-        // TODO ВЫВОДИТЬ ОБЪЯВЛЕНИЯ 
         $id = Auth::id();
-        dd(Ads::where('id_users' , $id)->get());
+        dd(Ads::where('id_users', $id)->get());
         dd(DB::table('ads')->where('id_users', '1'));
 
     }
@@ -86,5 +88,21 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('home');
+    }
+    public function message(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|max:255',
+            'message' => 'required|string',
+        ]);
+        $create = Message::create([
+            'email' => $request->email,
+            'name' => $request->name,
+            'message' => $request->message,
+            'status' => "созданно",
+        ]);
+        $request->session()->flash('registration_completed', 'Мы вас услышали, и в скором времени расмотрим ');
+        return redirect(route('about'));
     }
 }

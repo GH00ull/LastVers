@@ -1,11 +1,19 @@
 @extends('.home') @section('title') Регистрация @endsection @section('content')
 <div class="max-w-md mx-auto bg-white shadow-md rounded p-6">
-    @error('title','brand','mileage','price','description','city','condition','main_image')
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Ошибка!</strong>
-        <span class="block sm:inline">{{$message}}</span>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Ошибка!</strong>
+                <span class="block sm:inline">{{$error}}</span>
+            </div>
+
+            @endforeach
+        </ul>
     </div>
-    @enderror
+    @endif
+
     <h2 class="text-2xl font-bold mb-4">Создать объявление</h2>
     <form action="{{route('ads.creation')}}" method="post" enctype="multipart/form-data">
         @csrf
@@ -18,10 +26,11 @@
             <label for="brand" class="block mb-2">Марка</label>
             <select id="brand" name="brand" class="w-full border border-gray-300 p-2 rounded">
                 <option>Выберите марку</option>
-                <option value="1">Марка 1</option>
-                <option value="2">Марка 2</option>
-                <option value="3">Марка 3</option>
-                <option value="4">Марка 4</option>
+                @foreach ($brand as $item)
+
+                <option value="{{$item->id}}">{{$item->name}}</option>
+
+                @endforeach
             </select>
         </div>
         <div class="mb-4">
@@ -36,7 +45,8 @@
         </div>
         <div class="mb-4">
             <label for="main_image" class="block mb-2">Фото</label>
-            <input type="file" id="main_image" name="main_image" class="w-full border border-gray-300 p-2 rounded" />
+            <input type="file" id="main_image" name="images[]" class="w-full border border-gray-300 p-2 rounded"
+                multiple />
         </div>
         <div class="mb-4">
             <label for="description" class="block mb-2">Описание</label>
@@ -47,10 +57,11 @@
             <label for="city" class="block mb-2">Город</label>
             <select id="city" name="city" class="w-full border border-gray-300 p-2 rounded">
                 <option>Выберите город</option>
-                <option value="1">Город 1</option>
-                <option value="2">Город 2</option>
-                <option value="3">Город 3</option>
-                <option value="4">Город 4</option>
+                @foreach ($city as $item)
+
+                <option value="{{$item->id}}">{{$item->name}}</option>
+
+                @endforeach
             </select>
         </div>
         <div class="mb-4">

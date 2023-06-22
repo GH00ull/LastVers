@@ -15,9 +15,9 @@ class showroomMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->role != '3') {
+        if (auth()->user()->role_id != '3') {
             // todo: написать страницу не ту прав доступа 
-        abort(403, 'Access denied');
+            dd("вы автосалонов");
         }
         return $next($request);
     }

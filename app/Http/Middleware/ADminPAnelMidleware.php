@@ -15,9 +15,9 @@ class ADminPAnelMidleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->role != '5') {
+        if (auth()->user()->role_id != '5') {
             // todo: написать страницу не ту прав доступа 
-        abort(403, 'Access denied');
+            dd("вы не админ");
         }
         return $next($request);
     }

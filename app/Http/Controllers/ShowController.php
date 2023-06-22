@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ads;
+use App\Models\Brand;
+use App\Models\City;
 use Illuminate\Http\Request;
 
 class ShowController extends Controller
@@ -21,11 +23,15 @@ class ShowController extends Controller
     }
     public function Adscreat()
     {
-        return view('ads.creat');
+        $city = City::all();
+        $brand = Brand::all();
+        return view('ads.creat', compact('city', 'brand'));
     }
-    public function Adsshow()
+public function Adsshow()
     {
         $ads = Ads::all();
-        return view('ads.showall', compact('ads'));
+        $city=City::all();
+        $brand=Brand::all();
+        return view('ads.showall', compact('ads','city','brand'));
     }
 }

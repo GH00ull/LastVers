@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />@yield('link')
     @vite(['resources/css/app.css','resources/js/app.js'])
     <title>@yield('title')</title>
 </head>
@@ -13,7 +13,7 @@
     <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="{{ route('home') }}" class="flex items-center">
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">OA</span>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ОУ74</span>
             </a>
             <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
                 <ul
@@ -41,13 +41,29 @@
                             class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Регистрация</a>
                     </li>
                     @endguest
+
+
+
                     @auth
+
+                    @if (auth()->user()->role_id == '5')
+                    <a class=" block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent
+                        md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500
+                        dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                        href=" {{route('admin')}}">Админ</a>
+                    @endif
+                    @if(auth()->user() != false)
                     <li>
                         <a href="{{route('ads.creat')}}"
                             class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Создать
                             Объявления</a>
                     </li>
-                    <li>
+                    <a href="{{route('show.user')}}"
+                        class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent
+                        md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500
+                        dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Акаунт</a>
+                    @endif
+                    {{-- <li>
                         <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
                             class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
                             Аккаунт
@@ -67,18 +83,14 @@
                                     <a href="{{route('show.user')}}"
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Акаунт</a>
                                 </li>
-                                <li>
-                                    <a href="{{route('show.user.post')}}"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Ваши
-                                        Объявления</a>
-                                </li>
+
                             </ul>
                             <div class="py-1">
                                 <a href="{{route('logout')}}"
                                     class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Выход</a>
                             </div>
                         </div>
-                    </li>
+                    </li> --}}
                     @endauth
                 </ul>
             </div>
@@ -86,13 +98,8 @@
     </nav>
 
 
-    @if (session('registration_completed'))
-    <div class="alert alert-success">
-        {{ session('registration_completed') }}
-    </div>
-    @endif
-    <div class="">@yield('content')</div>
 
+    <div class="">@yield('content')</div>
 
 </body>
 
